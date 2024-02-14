@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using stockTable.Data;
 
@@ -10,9 +11,10 @@ using stockTable.Data;
 namespace stockTable.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240213131728_modelbuilderInventory")]
+    partial class modelbuilderInventory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace stockTable.Migrations
 
                     b.Property<string>("CabinetNum")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContractNum")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DataContract")
@@ -57,7 +62,7 @@ namespace stockTable.Migrations
                     b.HasIndex("InventoryNum")
                         .IsUnique();
 
-                    b.ToTable("Documents", (string)null);
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("stockTable.Models.Equipment", b =>
@@ -108,7 +113,7 @@ namespace stockTable.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Equipments", (string)null);
+                    b.ToTable("Equipments");
                 });
 
             modelBuilder.Entity("stockTable.Models.Status", b =>
@@ -129,7 +134,7 @@ namespace stockTable.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("stockTable.Models.Equipment", b =>

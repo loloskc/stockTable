@@ -14,5 +14,10 @@ namespace stockTable.Data
         {
          
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Document>().HasIndex(e => e.InventoryNum).IsUnique();
+        }
     }
 }

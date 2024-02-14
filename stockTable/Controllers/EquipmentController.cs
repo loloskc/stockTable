@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stockTable.Interfaces;
 using stockTable.Models;
+using stockTable.ViewModel;
 
 namespace stockTable.Controllers
 {
@@ -8,11 +9,13 @@ namespace stockTable.Controllers
     {
         private readonly IEquipmentRepository _equipmentRepository;
         private readonly IStatusRepository _statusRepository;
+        private readonly IDocumentRepository _documentRepository;
 
-        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository)
+        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository, IDocumentRepository documentRepository)
         {
             _equipmentRepository = equipmentRepository;
             _statusRepository = statusRepository;
+            _documentRepository = documentRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -25,13 +28,41 @@ namespace stockTable.Controllers
         public async Task<IActionResult> Create()
         {
             IEnumerable<Status> status = await _statusRepository.GetAll();
-            return View(status);
+            var equipmentVM = new CreateEqViewModel();
+            equipmentVM.Statuses = status;
+            return View(equipmentVM);
         }
 
         [HttpPost]
-        public IActionResult Create(int i)
+        public async Task<IActionResult> Create(CreateEqViewModel equipmnetVM)
         {
-            return RedirectToAction("Index");
+
+
+            if (ModelState.IsValid)
+            {
+                var equipment = equipmnetVM.Equipment;
+                var document = equipmnetVM.Document;
+                if (_documentRepository.NubmerIsValid(document.InventoryNum))
+                {
+                    _documentRepository.Add(document);
+                    var documentCarry = await _documentRepository.GetByNumber(document.InventoryNum);
+                    equipment.Document = documentCarry;
+                    equipment.IdDocument = documentCarry.Id;
+                    _equipmentRepository.Add(equipment);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(equipmnetVM);
+                }
+            }
+            else return View(equipmnetVM);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var equipment = await _equipmentRepository.GetById(id);
+            return View(equipment);
         }
     }
 }

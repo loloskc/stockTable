@@ -28,12 +28,12 @@ namespace stockTable.Repository
 
         public async Task<IEnumerable<Equipment>> GetAll()
         {
-            return await _context.Equipments.ToListAsync();
+            return await _context.Equipments.Include(u=>u.Document).Include(u=>u.Status).ToListAsync();
         }
 
         public async Task<Equipment?> GetById(int id)
         {
-            return await _context.Equipments.FirstOrDefaultAsync(i=>i.Id == id);
+            return await _context.Equipments.Include(u=>u.Document).Include(s=>s.Status).FirstOrDefaultAsync(i=>i.Id == id);
         }
 
         public Task<Equipment?> GetByIdNoTrack(int id)

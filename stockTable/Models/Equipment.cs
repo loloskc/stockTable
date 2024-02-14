@@ -15,12 +15,14 @@ namespace stockTable.Models
         public string? SerialNum { get; set; }
         public string dataE { get; set; }
         public int Price { get; set; }
+        [ForeignKey("Document")]
         public int IdDocument { get; set; }
-        [ForeignKey("IdDocument")]
-        public Document Document { get; set; }
+        
+        public Document? Document { get; set; }
+        [ForeignKey("Status")]
         public int StatusId { get; set; }
-        [ForeignKey("StatusId")]
-        public Status Status { get; set; }
+        
+        public Status? Status { get; set; }
 
 
 
