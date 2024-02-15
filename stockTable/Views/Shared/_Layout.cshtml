@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,18 +24,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Equipment" asp-action="Index">Оборудование</a>
+                            <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Index">Оборудование</a>
                         </li>
                         <li>
                             <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Create">Добавить</a>
                         </li>
-                      @*   <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Document" asp-action="Index">Документы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Статусы</a>
-                        </li> *@
                     </ul>
+                    <ul class="nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item"><a class="nav-link link-body-emphasis px-2 text-dark">@User.Identity.Name</a></li>
+                            <li class="nav-item"><a class="nav-link link-body-emphasis px-2 text-dark">Log out</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a asp-controller="Account" asp-action="Login" class="nav-link link-body-emphasis px-2 text-dark">Login</a></li>
+                            <li class="nav-item"><a asp-controller="Account" asp-action="Register" class="nav-link link-body-emphasis px-2 text-dark">Sign up</a></li>
+                        }
+                    </ul>
+                    
                 </div>
             </div>
         </nav>
