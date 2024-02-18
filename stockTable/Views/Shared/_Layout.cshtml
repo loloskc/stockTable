@@ -26,9 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Index">Оборудование</a>
                         </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Create">Добавить</a>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Create">Добавить</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav">
                         @if (User.Identity.IsAuthenticated)
