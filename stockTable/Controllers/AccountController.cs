@@ -94,5 +94,10 @@ namespace stockTable.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult AdminPanel()
+        {
+            return View();
+        }
     }
 }

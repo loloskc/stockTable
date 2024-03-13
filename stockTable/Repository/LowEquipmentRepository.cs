@@ -27,7 +27,9 @@ namespace stockTable.Repository
 
         public async Task<IEnumerable<LowEquipment>> GetAll()
         {
-            return await _context.LowEquipments.Include(c=>c.Document).Include(c=>c.Status).ToListAsync();
+            
+            var list = await _context.LowEquipments.ToListAsync();
+            return list;
         }
 
         public async Task<LowEquipment?> GetById(int id)

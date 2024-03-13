@@ -1,2 +1,39 @@
 ﻿@model IEnumerable<LowEquipment>
 
+<div class="bd-example m-0 border-0">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Ответственное лицо</th>
+                <th scope="col">Тип оборудование</th>
+                <th scope="col">Модель</th>
+                <th scope="col">Инвентарный номер</th>
+                <th scope="col">Кабинет</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@item.Status.Color" onclick="openDetail(@item.Id)">
+                    <th scope="row">@item.Document.Responsible</th>
+                    <td>@item.TypeEq</td>
+                    <td>@item.Model</td>
+                    <td>@item.Document.CabinetNum</td>
+                </tr>
+            }
+
+        </tbody>
+        
+    </table>
+</div>
+
+<script type="text/javascript">
+    const currentURL = window.location.href;
+    console.log(currentURL);
+    
+    function openDetail(id) {
+        window.open(currentURL+'/Detail/'+id, '_self');
+        console.log(currentURL + '/' + id);
+    }
+    
+</script>
