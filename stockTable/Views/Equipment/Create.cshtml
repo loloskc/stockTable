@@ -59,14 +59,14 @@
         <span asp-validation-for="Equipment.Price" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>Инвентарный номер</label>
-        <input asp-for="Document.InventoryNum" class="form-control" placeholder="Инвентарный номер">
-        <span asp-validation-for="Document.InventoryNum" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label>Номер кабинета</label>
         <input asp-for="Document.CabinetNum" class="form-control" placeholder="Номер кабинета">
         <span asp-validation-for="Document.CabinetNum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Инвентарный номер</label>
+        <input asp-for="Equipment.InventoryNum" class="form-control" placeholder="Инвентарный номер" />
+        <span asp-validation-for="Equipment.InventoryNum" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label>Номер контракта</label>

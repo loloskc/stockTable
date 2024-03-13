@@ -42,11 +42,6 @@ namespace stockTable.Repository
             throw new NotImplementedException();
         }
 
-        public bool NubmerIsValid(string num)
-        {
-            var document = _context.Documents.FirstOrDefault(i => i.InventoryNum == num);
-            return document == null;
-        }
 
         public async Task<int> GetCount()
         {
@@ -65,9 +60,5 @@ namespace stockTable.Repository
             return Save();
         }
 
-        public async Task<Document?> GetByNumber(string num)
-        {
-            return await _context.Documents.FirstOrDefaultAsync(i=>i.InventoryNum == num);
-        }
     }
 }

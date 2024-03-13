@@ -9,6 +9,8 @@ namespace stockTable.Interfaces
         bool Update(Equipment equipment);
         bool Save();
         Task<IEnumerable<Equipment>> GetAll();
+        bool NubmerIsValid(string num);
+        Task<Equipment?> GetByNumber(string num);
         Task<Equipment?> GetById(int id);
         Task<Equipment?> GetByIdNoTrack(int id);
         Task<int> GetCount();

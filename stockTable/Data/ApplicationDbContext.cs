@@ -21,7 +21,7 @@ namespace stockTable.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Document>().HasIndex(e => e.InventoryNum).IsUnique();
+            modelBuilder.Entity<Equipment>().HasIndex(e => e.InventoryNum).IsUnique();
 
             modelBuilder.Entity<Status>().HasData(
                 new Status { Id = 1, Name = "в эксплуатации",Color = "table-success" },

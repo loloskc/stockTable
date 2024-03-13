@@ -37,17 +37,15 @@ namespace stockTable.Controllers
         public async Task<IActionResult> Create(CreateEqViewModel equipmnetVM)
         {
 
-
+            equipmnetVM.Statuses = await _statusRepository.GetAll();
             if (ModelState.IsValid)
             {
                 var equipment = equipmnetVM.Equipment;
                 var document = equipmnetVM.Document;
-                if (_documentRepository.NubmerIsValid(document.InventoryNum))
+                if (_equipmentRepository.NubmerIsValid(equipment.InventoryNum))
                 {
                     _documentRepository.Add(document);
-                    var documentCarry = await _documentRepository.GetByNumber(document.InventoryNum);
-                    equipment.Document = documentCarry;
-                    equipment.IdDocument = documentCarry.Id;
+                    equipment.Document = document;
                     _equipmentRepository.Add(equipment);
                     return RedirectToAction("Index");
                 }

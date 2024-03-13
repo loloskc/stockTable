@@ -42,7 +42,7 @@ namespace stockTable.Service
 
         public void CreateBarCode(string code)
         {
-            throw new NotImplementedException();
+            _barcode.Encode(_type, code).Encode().AsStream();
         }
 
         public string GetPathImage(string code)
@@ -52,7 +52,7 @@ namespace stockTable.Service
 
         public void UploadImage(Stream stream)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

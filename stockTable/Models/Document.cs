@@ -6,7 +6,6 @@ namespace stockTable.Models
     {
         [Key]
         public int Id { get; set; }
-        public string InventoryNum { get; set; }
         public string CabinetNum { get; set; }
         public string? NumContract { get; set; }
         public string DataContract { get; set; }

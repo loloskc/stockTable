@@ -8,6 +8,7 @@ namespace stockTable.Models
         [Key]
         public int Id { get; set; }
         public string TypeEq { get; set; }
+        public string InventoryNum { get; set; }
         public string Model { get; set; }
         public string? NamePC { get; set; }
         public string? OCName { get; set; }

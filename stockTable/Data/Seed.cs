@@ -32,7 +32,7 @@ namespace stockTable.Data
                         Email = adminUserEmail,
                         EmailConfirmed = true,
                     };
-                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.CreateAsync(newAdminUser, "admin");
                     await userManager.AddToRoleAsync(newAdminUser, UserRole.Admin);
                 }
                 string appUserEmail = "user@etickets.com";

@@ -10,8 +10,6 @@ namespace stockTable.Interfaces
         bool Save();
         Task<IEnumerable<Document>> GetAll();
         Task<Document?> GetById(int id);
-        bool NubmerIsValid(string num);
-        Task<Document?> GetByNumber(string num);
         Task<Document?> GetByIdNoTrack(int id);
         Task<int> GetCount();
 

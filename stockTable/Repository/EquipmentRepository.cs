@@ -28,12 +28,19 @@ namespace stockTable.Repository
 
         public async Task<IEnumerable<Equipment>> GetAll()
         {
-            return await _context.Equipments.Include(u=>u.Document).Include(u=>u.Status).ToListAsync();
+            var list = await _context.Equipments.Include(u => u.Document).Include(u => u.Status).ToListAsync();
+            return list;
         }
 
         public async Task<Equipment?> GetById(int id)
         {
             return await _context.Equipments.Include(u=>u.Document).Include(s=>s.Status).FirstOrDefaultAsync(i=>i.Id == id);
+        }
+
+        public bool NubmerIsValid(string num)
+        {
+            var equipment = _context.Equipments.FirstOrDefault(i => i.InventoryNum == num);
+            return equipment == null;
         }
 
         public Task<Equipment?> GetByIdNoTrack(int id)
@@ -56,6 +63,11 @@ namespace stockTable.Repository
         {
             _context.Update(equipment);
             return Save();
+        }
+
+        public async Task<Equipment?> GetByNumber(string num)
+        {
+            return await _context.Equipments.FirstOrDefaultAsync(e => e.InventoryNum == num);
         }
     }
 }

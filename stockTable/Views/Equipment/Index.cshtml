@@ -11,20 +11,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
                 <tr class="@item.Status.Color" onclick="openDetail(@item.Id)">
-                    
                     <th scope="row">@item.Document.Responsible</th>
-                    
                     <td>@item.TypeEq</td>
                     <td>@item.Model</td>
-                    <td>@item.Document.InventoryNum</td>
-                    <td>@item.Document.CabinetNum</td>  
-                    
+                    <td>@item.Document.CabinetNum</td>
                 </tr>
             }
-           
+
         </tbody>
         
     </table>
