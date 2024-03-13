@@ -23,15 +23,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Index">Оборудование</a>
                         </li>
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li>
-                                <a class="nav-link text-dark" asp-controller="Equipment" asp-action="Create">Добавить</a>
-                            </li>
-                        }
                     </ul>
                     <ul class="nav">
                         @if (User.Identity.IsAuthenticated)
@@ -42,7 +37,6 @@
                         else
                         {
                             <li class="nav-item"><a asp-controller="Account" asp-action="Login" class="nav-link link-body-emphasis px-2 text-dark">Login</a></li>
-                            <li class="nav-item"><a asp-controller="Account" asp-action="Register" class="nav-link link-body-emphasis px-2 text-dark">Sign up</a></li>
                         }
                     </ul>
                     
