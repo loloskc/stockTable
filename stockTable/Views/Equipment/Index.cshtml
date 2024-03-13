@@ -17,6 +17,7 @@
                     <th scope="row">@item.Document.Responsible</th>
                     <td>@item.TypeEq</td>
                     <td>@item.Model</td>
+                    <td>@item.InventoryNum</td>
                     <td>@item.Document.CabinetNum</td>
                 </tr>
             }
@@ -31,7 +32,7 @@
     console.log(currentURL);
     
     function openDetail(id) {
-        window.open(currentURL+'/Detail/'+id, '_blank');
+        window.open(currentURL+'/Detail/'+id, '_self');
         console.log(currentURL + '/' + id);
     }
     
