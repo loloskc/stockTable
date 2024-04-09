@@ -56,41 +56,6 @@ namespace stockTable.Controllers
             return View(model);
         }
 
-        
-        public IActionResult Register()
-        {
-            var response = new RegisterViewModel();
-            return View(response);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if(!ModelState.IsValid)
-                return View(model);
-            
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            
-            if(user != null)
-            {
-                TempData["Error"] = "This email address is already in use";
-                return View(model);
-            }
-
-            var newUser = new User()
-            {
-                Email = model.Email,
-                UserName = model.Email
-            };
-            var newUserResponse = await _userManager.CreateAsync(newUser,model.Password);
-            if(newUserResponse.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(newUser, UserRole.Admin);
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
-            }
-            return RedirectToAction("Index", "Home");
-            
-        }
 
         public async Task<IActionResult> Logout()
         {
