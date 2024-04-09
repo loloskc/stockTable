@@ -119,7 +119,16 @@ namespace stockTable.Controllers
             var newUserResponse = await _userManager.CreateAsync(newUser, model.Password);
             if (newUserResponse.Succeeded)
             {
-                await _userManager.AddToRoleAsync(newUser, UserRole.Reader);
+                switch (model.Role)
+                {
+                    case "reader": await _userManager.AddToRoleAsync(newUser, UserRole.Reader);
+                        break;
+                    case "editor": await _userManager.AddToRoleAsync(newUser, UserRole.Editor);
+                        break;
+                    case "admin": await _userManager.AddToRoleAsync(newUser, UserRole.Admin);
+                        break;
+                }
+                
 
             }
             return RedirectToAction("Index", "Home");
