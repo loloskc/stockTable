@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using stockTable.Data;
+using stockTable.Interfaces;
 using stockTable.Models;
 using stockTable.ViewModel;
 
@@ -11,12 +12,14 @@ namespace stockTable.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserManager<User> userManager,SignInManager<User> signInManager,ApplicationDbContext context)
+        public AccountController(UserManager<User> userManager,SignInManager<User> signInManager,ApplicationDbContext context,IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _userRepository = userRepository;
         }
 
         public IActionResult Login()
@@ -101,6 +104,12 @@ namespace stockTable.Controllers
                 return View();
             else 
                 return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> ListAccount()
+        {
+            var list = await _userRepository.GetAll();
+            return View(list);
         }
     }
 }
