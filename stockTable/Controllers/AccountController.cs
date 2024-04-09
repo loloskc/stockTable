@@ -97,7 +97,7 @@ namespace stockTable.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+        [HttpGet]
         public IActionResult AdminPanel()
         {
             if(User.IsInRole("admin"))
@@ -142,7 +142,7 @@ namespace stockTable.Controllers
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRole.Reader);
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
+              
             }
             return RedirectToAction("Index", "Home");
         }
