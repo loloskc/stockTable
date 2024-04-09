@@ -73,15 +73,27 @@ namespace stockTable.Controllers
 
         public async Task<IActionResult> ListAccount()
         {
-            var list = await _userRepository.GetAll();
-            return View(list);
+            if (User.IsInRole("admin"))
+            {
+                var list = await _userRepository.GetAll();
+                return View(list);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+            
         }
 
         [HttpGet]
         public IActionResult CreateUser()
         {
-            var response = new RegisterViewModel();
-            return View(response);
+            if (User.IsInRole("admin"))
+            {
+                var response = new RegisterViewModel();
+                return View(response);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+
         }
 
         [HttpPost]
@@ -107,7 +119,7 @@ namespace stockTable.Controllers
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRole.Reader);
-              
+
             }
             return RedirectToAction("Index", "Home");
         }
