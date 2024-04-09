@@ -1,0 +1,16 @@
+﻿
+
+#titleControlPanel{
+    padding:10px;
+    padding-left:0;
+}
+
+ul.buttonControlAccount li{
+    display: inline;
+    padding-right: 10px;
+}
+
+ul.buttonControlAccount{
+    margin:0;
+    padding:4px;
+}

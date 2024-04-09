@@ -97,7 +97,10 @@ namespace stockTable.Controllers
 
         public IActionResult AdminPanel()
         {
-            return View();
+            if(User.IsInRole("admin"))
+                return View();
+            else 
+                return RedirectToAction("Index", "Home");
         }
     }
 }
