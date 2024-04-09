@@ -5,6 +5,7 @@ using stockTable.Data;
 using stockTable.Interfaces;
 using stockTable.Models;
 using stockTable.Repository;
+using stockTable.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddScoped<IStatusRepository,StatusRepository>();
 builder.Services.AddScoped<ILowEquipment,LowEquipmentRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IBarCodeService, BarCodeService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options=>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
