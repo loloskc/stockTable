@@ -14,6 +14,7 @@ namespace stockTable.Repository
             _context = context;
         }
 
+
         public async Task<IEnumerable<User>> GetAll()
         {
             return await _context.Users.ToListAsync();
@@ -24,7 +25,15 @@ namespace stockTable.Repository
             return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<IEnumerable<User>> GetUserByRole(string roleName)
+        public async Task<string> GetUserRoleById(string userId)
+        {
+            var UserRole = await _context.UserRoles.FirstOrDefaultAsync(i => i.UserId == userId);
+            var roleId = UserRole.RoleId;
+            var role = await _context.Roles.FirstOrDefaultAsync(i => i.Id == roleId);
+            return role.Name;
+        }
+
+        public async Task<IEnumerable<User>> GetUsersByRole(string roleName)
         {
             var listUserId = await GetUserId(roleName);
             List<User> user = new List<User>();

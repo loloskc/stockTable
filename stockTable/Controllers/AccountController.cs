@@ -135,9 +135,13 @@ namespace stockTable.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailUser()
+        public async Task<IActionResult> DetailUser(string id)
         {
-            return View();
+            DetailUserViewModel model = new DetailUserViewModel();
+            model.User = await _userRepository.GetById(id);
+            //model.RoleName = await _userRepository.GetUserByRole(id)
+
+            return View(model);
         }
     }
 }
