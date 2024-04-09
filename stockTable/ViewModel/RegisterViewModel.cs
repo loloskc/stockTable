@@ -14,6 +14,12 @@ namespace stockTable.ViewModel
         [Required(ErrorMessage = "Confirm password is required")]
         [Compare("Password", ErrorMessage = "Password do not match")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        [StringLength(100,MinimumLength =3)]
+        public string UserName { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
 
     }
 }
