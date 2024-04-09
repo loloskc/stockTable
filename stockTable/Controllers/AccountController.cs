@@ -139,7 +139,7 @@ namespace stockTable.Controllers
         {
             DetailUserViewModel model = new DetailUserViewModel();
             model.User = await _userRepository.GetById(id);
-            //model.RoleName = await _userRepository.GetUserByRole(id)
+            model.RoleName = await _userRepository.GetUserRoleById(id);
 
             return View(model);
         }
