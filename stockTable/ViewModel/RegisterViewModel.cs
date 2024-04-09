@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using stockTable.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace stockTable.ViewModel
 {
@@ -20,6 +21,9 @@ namespace stockTable.ViewModel
 
         [Required]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        public string Role { get; set; }
 
     }
 }
