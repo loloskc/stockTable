@@ -1,5 +1,7 @@
-﻿using stockTable.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using stockTable.Data;
 using stockTable.Interfaces;
+using stockTable.Migrations;
 using stockTable.Models;
 
 namespace stockTable.Repository
@@ -12,19 +14,44 @@ namespace stockTable.Repository
             _context = context;
         }
 
-        public Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Users.ToListAsync();
         }
 
-        public Task<User> GetById(int id)
+        public async Task<User> GetById(string id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public Task<IEnumerable<User>> GetUserByRole(string role)
+        public async Task<IEnumerable<User>> GetUserByRole(string roleName)
         {
-            throw new NotImplementedException();
+            var listUserId = await GetUserId(roleName);
+            List<User> user = new List<User>();
+            foreach(var id in listUserId)
+            {
+                user.Add(await GetById(id));
+            }
+            return user;
+        }
+
+        private async Task<string> GetRoleId(string roleName)
+        {
+            var role = await _context.Roles.FirstOrDefaultAsync(i => i.NormalizedName == roleName);
+            return role.Id;
+        }
+
+        private async Task<IEnumerable<string>> GetUserId(string roleName)
+        {
+            var roleId = await GetRoleId(roleName);
+            var list = await _context.UserRoles.Where(i=>i.RoleId == roleId).ToListAsync();
+
+            List<string> userId = new List<string>();
+            foreach (var item in list)
+            {
+                userId.Add(item.UserId);
+            }
+            return userId;
         }
     }
 }

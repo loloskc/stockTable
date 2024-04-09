@@ -6,7 +6,7 @@ namespace stockTable.Interfaces
     {
         Task<IEnumerable<User>> GetAll();
         Task<IEnumerable<User>> GetUserByRole(string role);
-        Task<User> GetById(int id);
+        Task<User> GetById(string id);
 
     }
 }
