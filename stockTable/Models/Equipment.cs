@@ -26,7 +26,6 @@ namespace stockTable.Models
         public Status? Status { get; set; }
 
 
-
     }
 }
 

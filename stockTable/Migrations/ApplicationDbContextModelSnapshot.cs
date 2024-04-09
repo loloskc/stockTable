@@ -184,7 +184,7 @@ namespace stockTable.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Documents", (string)null);
                 });
 
             modelBuilder.Entity("stockTable.Models.Equipment", b =>
@@ -242,7 +242,7 @@ namespace stockTable.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Equipments");
+                    b.ToTable("Equipments", (string)null);
                 });
 
             modelBuilder.Entity("stockTable.Models.LowEquipment", b =>
@@ -287,7 +287,7 @@ namespace stockTable.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("LowEquipments");
+                    b.ToTable("LowEquipments", (string)null);
                 });
 
             modelBuilder.Entity("stockTable.Models.Status", b =>
@@ -308,7 +308,7 @@ namespace stockTable.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Statuses", (string)null);
 
                     b.HasData(
                         new

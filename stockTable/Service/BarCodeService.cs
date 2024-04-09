@@ -40,19 +40,15 @@ namespace stockTable.Service
             _barcode.Alignment = AlignmentPositions.Center;
         }
 
-        public void CreateBarCode(string code)
+        public int[] GetImage(string code)
         {
-            _barcode.Encode(_type, code).Encode().AsStream();
-        }
-
-        public string GetPathImage(string code)
-        {
-            return string.Empty;
-        }
-
-        public void UploadImage(Stream stream)
-        {
-
+            var span = _barcode.Encode(_type, code).Encode().AsSpan();
+            int[] array = new int[span.ToArray().Length];
+            for(int i =0;i < span.ToArray().Length; i++)
+            {
+                array[i] = span.ToArray()[i];
+            }
+            return array;
         }
     }
 }
