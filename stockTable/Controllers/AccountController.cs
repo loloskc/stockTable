@@ -113,7 +113,8 @@ namespace stockTable.Controllers
             var newUser = new User()
             {
                 Email = model.Email,
-                UserName = model.Email
+                UserName = model.UserName,
+                PhoneNumber = model.PhoneNumber
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, model.Password);
             if (newUserResponse.Succeeded)
