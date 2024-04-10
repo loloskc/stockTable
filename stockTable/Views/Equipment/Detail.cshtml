@@ -27,3 +27,13 @@
 <h3>Дата контракта: @Model.Equipment.Document.CabinetNum</h3>
 <h3>Ответственый по документам: @Model.Equipment.Document.Responsible</h3>
 <h3>Наименование по бухгалтерии: @Model.Equipment.Document.NameForBookkeeping</h3>
+<hr />
+
+<img id="yourImg" alt="Изображение из массива байтов" />
+
+<script>
+    var model = @Json.Serialize(Model.ImageArray);
+    console.log(model);
+    let base64String = btoa(String.fromCharCode(...new Uint8Array(model)));
+    document.getElementById('yourImg').src = `data:image/jpeg;base64,${base64String}`;
+</script>

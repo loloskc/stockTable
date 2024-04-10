@@ -67,7 +67,7 @@ namespace stockTable.Controllers
                 Equipment = equipment,
                 ImageArray = _barCodeService.GetImage(equipment.InventoryNum)
             };
-            return View(equipment);
+            return View(vModel);
         }
     }
 }
