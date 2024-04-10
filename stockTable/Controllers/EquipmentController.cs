@@ -10,12 +10,14 @@ namespace stockTable.Controllers
         private readonly IEquipmentRepository _equipmentRepository;
         private readonly IStatusRepository _statusRepository;
         private readonly IDocumentRepository _documentRepository;
+        private readonly IBarCodeService _barCodeService;
 
-        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository, IDocumentRepository documentRepository)
+        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository, IDocumentRepository documentRepository, IBarCodeService barCodeService)
         {
             _equipmentRepository = equipmentRepository;
             _statusRepository = statusRepository;
             _documentRepository = documentRepository;
+            _barCodeService = barCodeService;   
         }
 
         public async Task<IActionResult> Index()
@@ -60,6 +62,11 @@ namespace stockTable.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var equipment = await _equipmentRepository.GetById(id);
+            var vModel = new DetailEquipmentViewModel()
+            {
+                Equipment = equipment,
+                ImageArray = _barCodeService.GetImage(equipment.InventoryNum)
+            };
             return View(equipment);
         }
     }
