@@ -13,13 +13,15 @@ namespace stockTable.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager,SignInManager<User> signInManager,ApplicationDbContext context,IUserRepository userRepository)
+        public AccountController(UserManager<User> userManager,SignInManager<User> signInManager,ApplicationDbContext context,IUserRepository userRepository,ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _userRepository = userRepository;
+            _logger = logger;
         }
 
         public IActionResult Login()
@@ -46,6 +48,7 @@ namespace stockTable.Controllers
                     var identity = userPrincipal.Identity;
                     if (result.Succeeded)
                     {
+                        _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} зашел");
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -131,6 +134,8 @@ namespace stockTable.Controllers
                 
 
             }
+            _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал аккаунт id:{newUser.Id} Name:{newUser.UserName}");
+
             return RedirectToAction("Index", "Home");
         }
 

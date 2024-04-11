@@ -6,11 +6,13 @@ using stockTable.Interfaces;
 using stockTable.Models;
 using stockTable.Repository;
 using stockTable.Service;
+using stockTable.Service.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(),"Logs/"));
 builder.Services.AddScoped<IDocumentRepository,DocumentRepository>();
 builder.Services.AddScoped<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddScoped<IStatusRepository,StatusRepository>();
@@ -64,5 +66,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

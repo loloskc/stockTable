@@ -15,6 +15,7 @@ namespace stockTable.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation($"{User.Identity.Name} Time: {DateTime.Now.ToLongDateString()} Open this page");
             return View();
         }
 
