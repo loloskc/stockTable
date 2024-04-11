@@ -11,13 +11,16 @@ namespace stockTable.Controllers
         private readonly IStatusRepository _statusRepository;
         private readonly IDocumentRepository _documentRepository;
         private readonly IBarCodeService _barCodeService;
+        private readonly ILogger<EquipmentController> _logger;
 
-        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository, IDocumentRepository documentRepository, IBarCodeService barCodeService)
+        public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository,
+            IDocumentRepository documentRepository, IBarCodeService barCodeService, ILogger<EquipmentController> logger)
         {
             _equipmentRepository = equipmentRepository;
             _statusRepository = statusRepository;
             _documentRepository = documentRepository;
             _barCodeService = barCodeService;   
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -29,10 +32,15 @@ namespace stockTable.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            IEnumerable<Status> status = await _statusRepository.GetAll();
-            var equipmentVM = new CreateEqViewModel();
-            equipmentVM.Statuses = status;
-            return View(equipmentVM);
+            if (User.IsInRole("admin") || User.IsInRole("editor"))
+            {
+                IEnumerable<Status> status = await _statusRepository.GetAll();
+                var equipmentVM = new CreateEqViewModel();
+                equipmentVM.Statuses = status;
+                return View(equipmentVM);
+            }
+            return RedirectToAction("Index", "Home");
+            
         }
 
         [HttpPost]
@@ -49,6 +57,7 @@ namespace stockTable.Controllers
                     _documentRepository.Add(document);
                     equipment.Document = document;
                     _equipmentRepository.Add(equipment);
+                    _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал запись оборудования {equipment.Id}");
                     return RedirectToAction("Index");
                 }
                 else
