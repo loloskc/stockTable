@@ -48,7 +48,7 @@ namespace stockTable.Controllers
                     var identity = userPrincipal.Identity;
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} зашел");
+                        _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {user.Id} Действия: Зашел в аккауни");
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -63,6 +63,8 @@ namespace stockTable.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Вышел из аккаунта");
+
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
