@@ -57,7 +57,7 @@ namespace stockTable.Controllers
                     _documentRepository.Add(document);
                     equipment.Document = document;
                     _equipmentRepository.Add(equipment);
-                    _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал запись оборудования {equipment.Id}");
+                    _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал запись оборудования id:{equipment.Id}");
                     return RedirectToAction("Index");
                 }
                 else
