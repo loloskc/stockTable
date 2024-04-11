@@ -1,10 +1,20 @@
 ﻿@model IEnumerable<Equipment>
 <div class="bd-example m-0 border-0">
+    
+    <div class="field-search">
+        <input placeholder="Поиск"/>
+            <select>
+                <option></option>
+                <option>Категории</option>
+            </select>
+            <button>Поиск</button>
+    </div>
+    <div class="table-control">
     @if (User.IsInRole("admin") || User.IsInRole("editor"))
     {
         <a asp-controller="Equipment" asp-action="Create" type="button" class="btn btn-primary">Добавить</a>
     }
-    <table class="table table-hover">
+    <table class="table table-hover"">
         <thead>
             <tr>
                 <th scope="col">Ответственное лицо</th>
@@ -29,6 +39,7 @@
         </tbody>
         
     </table>
+    </div>
 </div>
 
 <script type="text/javascript">
