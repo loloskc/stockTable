@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Equipment>
+﻿@using stockTable.ViewModel.EquipmentViewModel;
+@model IndexEquipmentViewModel;
 <div class="bd-example m-0 border-0">
     
     <div class="field-search">
         <form method="post">
-            <input name="SearchField" placeholder="Поиск" />
+            <input name="searchField" placeholder="Поиск" />
             <select>
                 <option></option>
                 <option>Категории</option>
@@ -27,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Equipments)
             {
                 <tr class="@item.Status.Color" onclick="openDetail(@item.Id)">
                     <th scope="row">@item.Document.Responsible</th>

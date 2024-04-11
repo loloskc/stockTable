@@ -27,7 +27,15 @@ namespace stockTable.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
-            return View(equipments);
+            IEnumerable<Status> statuses = await _statusRepository.GetAll();
+            var statusesId = from status in statuses select status.Id;
+           
+            IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
+            {
+                Equipments = equipments,
+                StatusId = statusesId,
+            };
+            return View(vModel);
         }
         [HttpPost]
         public async Task<IActionResult> Index(string searchField)
@@ -62,12 +70,15 @@ namespace stockTable.Controllers
                     if (!result.Contains(item))
                         result.Add(item);
                 }
-
-                return View(result);
+                IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
+                {
+                    Equipments = result
+                };
+                return View(vModel);
             }
             else
             {
-                return View(equipments);
+                return View(new IndexEquipmentViewModel() { Equipments = equipments});
             }
 
         }
