@@ -28,6 +28,48 @@ namespace stockTable.Controllers
             IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
             return View(equipments);
         }
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchField)
+        {
+            IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(searchField))
+            {
+                var result = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
+                var resultByModel = equipments.Where(c => c.Model!.Contains(searchField)).ToList();
+                var resultByTypeEq = equipments.Where(c => c.TypeEq!.Contains(searchField)).ToList();
+                var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
+                var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
+
+                foreach (var item in resultByModel)
+                {
+                    if (!result.Contains(item))
+                        result.Add(item);
+                }
+                foreach (var item in resultByTypeEq)
+                {
+                    if (!result.Contains(item))
+                        result.Add(item);
+                }
+                foreach (var item in resultByIp)
+                {
+                    if (!result.Contains(item))
+                        result.Add(item);
+                }
+                foreach (var item in resultBySerialNum)
+                {
+                    if (!result.Contains(item))
+                        result.Add(item);
+                }
+
+                return View(result);
+            }
+            else
+            {
+                return View(equipments);
+            }
+            
+        }
 
         [HttpGet]
         public async Task<IActionResult> Create()

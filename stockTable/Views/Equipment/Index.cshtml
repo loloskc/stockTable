@@ -2,12 +2,14 @@
 <div class="bd-example m-0 border-0">
     
     <div class="field-search">
-        <input placeholder="Поиск"/>
+        <form method="post">
+            <input name="searchField" placeholder="Поиск" />
             <select>
                 <option></option>
                 <option>Категории</option>
             </select>
-            <button>Поиск</button>
+            <button type="submit">Поиск</button>
+        </form>
     </div>
     <div class="table-control">
     @if (User.IsInRole("admin") || User.IsInRole("editor"))
