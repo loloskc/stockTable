@@ -2,6 +2,7 @@
 using stockTable.Interfaces;
 using stockTable.Models;
 using stockTable.ViewModel;
+using stockTable.ViewModel.EquipmentViewModel;
 
 namespace stockTable.Controllers
 {
@@ -68,8 +69,11 @@ namespace stockTable.Controllers
             {
                 return View(equipments);
             }
-            
+
         }
+
+        [HttpPost]
+
 
         [HttpGet]
         public async Task<IActionResult> Create()

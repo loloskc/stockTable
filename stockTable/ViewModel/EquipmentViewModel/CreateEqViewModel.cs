@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace stockTable.ViewModel
+namespace stockTable.ViewModel.EquipmentViewModel
 {
     public class CreateEqViewModel
     {
