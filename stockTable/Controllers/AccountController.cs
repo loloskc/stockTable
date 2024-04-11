@@ -144,11 +144,16 @@ namespace stockTable.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailUser(string id)
         {
-            DetailUserViewModel model = new DetailUserViewModel();
-            model.User = await _userRepository.GetById(id);
-            model.RoleName = await _userRepository.GetUserRoleById(id);
+            if (User.IsInRole("admin"))
+            {
+                DetailUserViewModel model = new DetailUserViewModel();
+                model.User = await _userRepository.GetById(id);
+                model.RoleName = await _userRepository.GetUserRoleById(id);
 
-            return View(model);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+           
         }
     }
 }
