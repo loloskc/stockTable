@@ -10,6 +10,10 @@ using stockTable.Service.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+var currentPath = Directory.GetCurrentDirectory();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(),"Logs/"));
