@@ -69,5 +69,10 @@ namespace stockTable.Repository
         {
             return await _context.Equipments.FirstOrDefaultAsync(e => e.InventoryNum == num);
         }
+
+        public async Task<IEnumerable<Equipment>> GetByStatusId(int statusId)
+        {
+            return await _context.Equipments.Where(c => c.StatusId == statusId).ToListAsync();
+        }
     }
 }
