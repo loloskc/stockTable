@@ -72,7 +72,7 @@ namespace stockTable.Repository
 
         public async Task<IEnumerable<Equipment>> GetByStatusId(int statusId)
         {
-            return await _context.Equipments.Where(c => c.StatusId == statusId).ToListAsync();
+            return await _context.Equipments.Where(c => c.StatusId == statusId).Include(c=>c.Document).ToListAsync();
         }
     }
 }
