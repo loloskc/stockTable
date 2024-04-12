@@ -43,13 +43,13 @@ namespace stockTable.Controllers
 
             if (!String.IsNullOrEmpty(searchField))
             {
-                var result = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
+                var resultByInventoryNum = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
                 var resultByModel = equipments.Where(c => c.Model!.Contains(searchField)).ToList();
                 var resultByTypeEq = equipments.Where(c => c.TypeEq!.Contains(searchField)).ToList();
                 var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
                 var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
 
-                var res =result.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
+                var res = resultByInventoryNum.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
                 IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
                 {
                     Equipments = res
@@ -64,7 +64,31 @@ namespace stockTable.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Index(string searchField, int statusId)
+        {
+            IEnumerable<Equipment> equipments = await _equipmentRepository.GetByStatusId(statusId);
 
+            if (!String.IsNullOrEmpty(searchField))
+            {
+                var resultByInventoryNum = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
+                var resultByModel = equipments.Where(c => c.Model!.Contains(searchField)).ToList();
+                var resultByTypeEq = equipments.Where(c => c.TypeEq!.Contains(searchField)).ToList();
+                var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
+                var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
+
+                var res = resultByInventoryNum.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
+                IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
+                {
+                    Equipments = res
+                };
+                return View(vModel);
+            }
+            else
+            {
+                return View(new IndexEquipmentViewModel() { Equipments = equipments });
+            }
+
+        }
 
         [HttpGet]
         public async Task<IActionResult> Create()
