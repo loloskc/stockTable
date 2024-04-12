@@ -5,9 +5,12 @@
     <div class="field-search">
         <form method="post">
             <input name="searchField" placeholder="Поиск" />
-            <select>
+            <select name="statusId">
                 <option></option>
-                <option>Категории</option>
+                @foreach(var item in Model.Statuses)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
             <button type="submit">Поиск</button>
         </form>
