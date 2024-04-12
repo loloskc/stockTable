@@ -88,26 +88,29 @@ namespace stockTable.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateEqViewModel equipmnetVM)
         {
-
-            equipmnetVM.Statuses = await _statusRepository.GetAll();
-            if (ModelState.IsValid)
+            if (User.IsInRole("admin") || User.IsInRole("editor"))
             {
-                var equipment = equipmnetVM.Equipment;
-                var document = equipmnetVM.Document;
-                if (_equipmentRepository.NubmerIsValid(equipment.InventoryNum))
+                equipmnetVM.Statuses = await _statusRepository.GetAll();
+                if (ModelState.IsValid)
                 {
-                    _documentRepository.Add(document);
-                    equipment.Document = document;
-                    _equipmentRepository.Add(equipment);
-                    _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал запись оборудования id:{equipment.Id}");
-                    return RedirectToAction("Index");
+                    var equipment = equipmnetVM.Equipment;
+                    var document = equipmnetVM.Document;
+                    if (_equipmentRepository.NubmerIsValid(equipment!.InventoryNum))
+                    {
+                        _documentRepository.Add(document!);
+                        equipment.Document = document;
+                        _equipmentRepository.Add(equipment);
+                        _logger.LogInformation($"{DateTime.Now.ToLongDateString()}  Пользователь: {User.Identity.Name} Действия: Создал запись оборудования id:{equipment.Id}");
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View(equipmnetVM);
+                    }
                 }
-                else
-                {
-                    return View(equipmnetVM);
-                }
+                else return View(equipmnetVM);
             }
-            else return View(equipmnetVM);
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Detail(int id)
@@ -115,8 +118,8 @@ namespace stockTable.Controllers
             var equipment = await _equipmentRepository.GetById(id);
             var vModel = new DetailEquipmentViewModel()
             {
-                Equipment = equipment,
-                ImageArray = _barCodeService.GetImage(equipment.InventoryNum)
+                Equipment = equipment!,
+                ImageArray = _barCodeService.GetImage(equipment!.InventoryNum)
             };
             return View(vModel);
         }
