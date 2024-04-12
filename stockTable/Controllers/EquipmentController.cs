@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stockTable.Interfaces;
 using stockTable.Models;
+using stockTable.Service;
 using stockTable.ViewModel;
 using stockTable.ViewModel.EquipmentViewModel;
 
@@ -13,6 +14,7 @@ namespace stockTable.Controllers
         private readonly IDocumentRepository _documentRepository;
         private readonly IBarCodeService _barCodeService;
         private readonly ILogger<EquipmentController> _logger;
+        private readonly SearchService searchService;
 
         public EquipmentController(IEquipmentRepository equipmentRepository, IStatusRepository statusRepository,
             IDocumentRepository documentRepository, IBarCodeService barCodeService, ILogger<EquipmentController> logger)
@@ -22,6 +24,7 @@ namespace stockTable.Controllers
             _documentRepository = documentRepository;
             _barCodeService = barCodeService;   
             _logger = logger;
+            searchService = new();
         }
 
         public async Task<IActionResult> Index()
@@ -36,56 +39,34 @@ namespace stockTable.Controllers
             };
             return View(vModel);
         }
-        [HttpPost]
-        public async Task<IActionResult> Index(string searchField)
-        {
-            IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
-
-            if (!String.IsNullOrEmpty(searchField))
-            {
-                var resultByInventoryNum = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
-                var resultByModel = equipments.Where(c => c.Model!.Contains(searchField)).ToList();
-                var resultByTypeEq = equipments.Where(c => c.TypeEq!.Contains(searchField)).ToList();
-                var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
-                var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
-
-                var res = resultByInventoryNum.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
-                IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
-                {
-                    Equipments = res
-                };
-                return View(vModel);
-            }
-            else
-            {
-                return View(new IndexEquipmentViewModel() { Equipments = equipments});
-            }
-
-        }
 
         [HttpPost]
         public async Task<IActionResult> Index(string searchField, int statusId)
         {
-            IEnumerable<Equipment> equipments = await _equipmentRepository.GetByStatusId(statusId);
+            IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
+            IEnumerable<Status> statuses = await _statusRepository.GetAll();
 
-            if (!String.IsNullOrEmpty(searchField))
+
+            if (statusId == 0)
             {
-                var resultByInventoryNum = equipments.Where(c => c.InventoryNum!.Contains(searchField)).ToList();
-                var resultByModel = equipments.Where(c => c.Model!.Contains(searchField)).ToList();
-                var resultByTypeEq = equipments.Where(c => c.TypeEq!.Contains(searchField)).ToList();
-                var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
-                var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
-
-                var res = resultByInventoryNum.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
+                var result = searchService.GetEquipment(equipments, searchField);
                 IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
                 {
-                    Equipments = res
+                    Equipments = result,
+                    Statuses = statuses,
                 };
                 return View(vModel);
             }
             else
             {
-                return View(new IndexEquipmentViewModel() { Equipments = equipments });
+                equipments = await _equipmentRepository.GetByStatusId(statusId);
+                var result = searchService.GetEquipment(equipments, searchField);
+                IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
+                {
+                    Equipments = result,
+                    Statuses = statuses,
+                };
+                return View(vModel);
             }
 
         }
