@@ -7,5 +7,6 @@ namespace stockTable.ViewModel.EquipmentViewModel
         public IEnumerable<Equipment> Equipments { get; set; }
         public string SearchField { get; set; }
         public IEnumerable<Status> Statuses { get; set; }
+        public int StatusId { get; set; }
     }
 }
