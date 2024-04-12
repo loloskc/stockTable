@@ -28,7 +28,7 @@ namespace stockTable.Data
                 new Status { Id = 1, Name = "в эксплуатации",Color = "table-success" },
                 new Status { Id = 2, Name = "подготовка к списанию", Color = "table-warning" },
                 new Status { Id = 3, Name = "подготовка к утилизации", Color = "table-danger" },
-                new Status { Id = 4, Name = "требуется ремонт", Color = "table-warning" },
+                new Status { Id = 4, Name = "требуется ремонт", Color = "table-secondary" },
                 new Status { Id = 5, Name = "резерв", Color = "table-primary" }
                 );
         }
