@@ -28,12 +28,11 @@ namespace stockTable.Controllers
         {
             IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
             IEnumerable<Status> statuses = await _statusRepository.GetAll();
-            var statusesId = from status in statuses select status.Id;
            
             IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
             {
                 Equipments = equipments,
-                StatusId = statusesId,
+                Statuses = statuses
             };
             return View(vModel);
         }
@@ -50,29 +49,10 @@ namespace stockTable.Controllers
                 var resultByIp = equipments.Where(c => c.IPAddress!.Contains(searchField)).ToList();
                 var resultBySerialNum = equipments.Where(c => c.SerialNum!.Contains(searchField)).ToList();
 
-                foreach (var item in resultByModel)
-                {
-                    if (!result.Contains(item))
-                        result.Add(item);
-                }
-                foreach (var item in resultByTypeEq)
-                {
-                    if (!result.Contains(item))
-                        result.Add(item);
-                }
-                foreach (var item in resultByIp)
-                {
-                    if (!result.Contains(item))
-                        result.Add(item);
-                }
-                foreach (var item in resultBySerialNum)
-                {
-                    if (!result.Contains(item))
-                        result.Add(item);
-                }
+                var res =result.Union(resultByModel).Union(resultByIp).Union(resultByTypeEq).Union(resultBySerialNum);
                 IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
                 {
-                    Equipments = result
+                    Equipments = res
                 };
                 return View(vModel);
             }
