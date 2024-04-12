@@ -1,10 +1,26 @@
-﻿@model IEnumerable<Equipment>
+﻿@using stockTable.ViewModel.EquipmentViewModel;
+@model IndexEquipmentViewModel;
 <div class="bd-example m-0 border-0">
+    
+    <div class="field-search">
+        <form method="post">
+            <input name="searchField" placeholder="Поиск" />
+            <select name="statusId">
+                <option></option>
+                @foreach(var item in Model.Statuses)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+    <div class="table-control">
     @if (User.IsInRole("admin") || User.IsInRole("editor"))
     {
         <a asp-controller="Equipment" asp-action="Create" type="button" class="btn btn-primary">Добавить</a>
     }
-    <table class="table table-hover">
+    <table class="table table-hover"">
         <thead>
             <tr>
                 <th scope="col">Ответственное лицо</th>
@@ -15,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Equipments)
             {
                 <tr class="@item.Status.Color" onclick="openDetail(@item.Id)">
                     <th scope="row">@item.Document.Responsible</th>
@@ -29,6 +45,7 @@
         </tbody>
         
     </table>
+    </div>
 </div>
 
 <script type="text/javascript">

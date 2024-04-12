@@ -1,6 +1,6 @@
 ﻿using stockTable.Models;
 
-namespace stockTable.ViewModel
+namespace stockTable.ViewModel.EquipmentViewModel
 {
     public class DetailEquipmentViewModel
     {
