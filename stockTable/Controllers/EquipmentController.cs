@@ -22,7 +22,7 @@ namespace stockTable.Controllers
             _equipmentRepository = equipmentRepository;
             _statusRepository = statusRepository;
             _documentRepository = documentRepository;
-            _barCodeService = barCodeService;   
+            _barCodeService = barCodeService;
             _logger = logger;
             searchService = new();
         }
@@ -31,7 +31,7 @@ namespace stockTable.Controllers
         {
             IEnumerable<Equipment> equipments = await _equipmentRepository.GetAll();
             IEnumerable<Status> statuses = await _statusRepository.GetAll();
-           
+
             IndexEquipmentViewModel vModel = new IndexEquipmentViewModel()
             {
                 Equipments = equipments,
@@ -82,7 +82,7 @@ namespace stockTable.Controllers
                 return View(equipmentVM);
             }
             return RedirectToAction("Index", "Home");
-            
+
         }
 
         [HttpPost]
@@ -112,7 +112,7 @@ namespace stockTable.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             var equipment = await _equipmentRepository.GetById(id);
@@ -122,6 +122,55 @@ namespace stockTable.Controllers
                 ImageArray = _barCodeService.GetImage(equipment!.InventoryNum)
             };
             return View(vModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var equipment = await _equipmentRepository.GetById(id);
+            var statuses = await _statusRepository.GetAll();
+            if (equipment == null) return View("Error");
+            var vModel = new EditEqViewModel()
+            {
+                Equipment = equipment,
+                Statuses = statuses,
+                Document = equipment.Document
+            };
+
+            return View(vModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditEqViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit Equipment");
+                model.Statuses = await _statusRepository.GetAll();
+                return View(model);
+            }
+            
+            var document = model.Document;
+            var equipment = model.Equipment;
+            equipment.Document = document;
+            _documentRepository.Update(document);
+            _equipmentRepository.Update(equipment);
+            return RedirectToAction("Index","Equipment");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var equipment = await _equipmentRepository.GetById(id);
+            var document = await _documentRepository.GetById(equipment.IdDocument);
+            if ( equipment != null)
+            {
+                
+                _equipmentRepository.Delete(equipment);
+                _documentRepository.Delete(document!);
+                return RedirectToAction("Index", "Equipment");
+            }
+            else
+                return View("Error");
+
         }
     }
 }

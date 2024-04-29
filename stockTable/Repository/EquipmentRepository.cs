@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using stockTable.Models;
-using stockTable.Interfaces;
 using stockTable.Data;
+using stockTable.Interfaces;
+using stockTable.Models;
 
 namespace stockTable.Repository
 {
@@ -34,7 +34,7 @@ namespace stockTable.Repository
 
         public async Task<Equipment?> GetById(int id)
         {
-            return await _context.Equipments.Include(u=>u.Document).Include(s=>s.Status).FirstOrDefaultAsync(i=>i.Id == id);
+            return await _context.Equipments.Include(u => u.Document).Include(s => s.Status).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public bool NubmerIsValid(string num)
@@ -72,7 +72,7 @@ namespace stockTable.Repository
 
         public async Task<IEnumerable<Equipment>> GetByStatusId(int statusId)
         {
-            return await _context.Equipments.Where(c => c.StatusId == statusId).Include(c=>c.Document).ToListAsync();
+            return await _context.Equipments.Where(c => c.StatusId == statusId).Include(c => c.Document).ToListAsync();
         }
     }
 }
