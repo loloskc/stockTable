@@ -34,10 +34,14 @@
         <img align="top" id="yourImg" alt="Изображение из массива байтов" />
     </div>
 </div>
-<div class="control-btn">
-    <a asp-controller="Equipment" asp-action="Edit" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-warning">Изменить</a>
-    <a asp-controller="Equipment" asp-action="Delete" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-danger">Удалить</a>
-</div>
+@if (User.IsInRole("admin") || User.IsInRole("editor"))
+{
+    <div class="control-btn">
+        <a asp-controller="Equipment" asp-action="Edit" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-warning">Изменить</a>
+        <a asp-controller="Equipment" asp-action="Delete" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-danger">Удалить</a>
+    </div>
+}
+
 
 <script>
     var model = @Json.Serialize(Model.ImageArray);
