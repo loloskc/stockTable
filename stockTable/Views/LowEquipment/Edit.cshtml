@@ -1,0 +1,81 @@
+﻿@using stockTable.ViewModel.LowEquipmentViewModel;
+@model EditLowEquipmentViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Document.Id" />
+    <input type="hidden" asp-for="Equipment.Id" />
+    <input type="hidden" asp-for="Equipment.IdDocument" />
+    <div class="form-group">
+        <label>Тип оборудования</label>
+        <input asp-for="Equipment.TypeEq" class="form-control" placeholder="Тип оборудования">
+        <span asp-validation-for="Equipment.TypeEq" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Модел оборудования</label>
+        <input asp-for="Equipment.Model" class="form-control" placeholder="Модел оборудования">
+        <span asp-validation-for="Equipment.Model" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Статус</label>
+        <select asp-for="Equipment.StatusId" class="form-control form-control-lg">
+            @foreach (var item in Model.Statuses)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Equipment.StatusId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>IP адрес</label>
+        <input asp-for="Equipment.IPAddress" class="form-control" placeholder="IP адрес">
+        <span asp-validation-for="Equipment.IPAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Серийный/заводской номер</label>
+        <input asp-for="Equipment.SerialNum" class="form-control" placeholder="Серийный/заводской номер">
+        <span asp-validation-for="Equipment.SerialNum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Количество</label>
+        <input asp-for="Equipment.Count" class="form-control" placeholder="Цена">
+        <span asp-validation-for="Equipment.Count" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Цена</label>
+        <input asp-for="Equipment.Price" class="form-control" placeholder="Цена">
+        <span asp-validation-for="Equipment.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Номер кабинета</label>
+        <input asp-for="Document.CabinetNum" class="form-control" placeholder="Номер кабинета">
+        <span asp-validation-for="Document.CabinetNum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Номер контракта</label>
+        <input asp-for="Document.NumContract" class="form-control" placeholder="Номер контракта">
+        <span asp-validation-for="Document.NumContract" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Дата контракта</label>
+        <input asp-for="Document.DataContract" class="form-control" placeholder="Дата контракта">
+        <span asp-validation-for="Document.DataContract" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Ответственное лицо</label>
+        <input asp-for="Document.Responsible" class="form-control" placeholder="На ком числится">
+        <span asp-validation-for="Document.Responsible" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Наименование оборудования по бухгалтерии</label>
+        <input asp-for="Document.NameForBookkeeping" class="form-control" placeholder="Наименование оборудования по бухгалтерии">
+        <span asp-validation-for="Document.NameForBookkeeping" class="text-danger"></span>
+    </div>
+
+    <hr />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

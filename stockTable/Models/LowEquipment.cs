@@ -15,10 +15,10 @@ namespace stockTable.Models
         public int Price { get; set; }
         [ForeignKey("Document")]
         public int IdDocument { get; set; }
-        public Document Document { get; set; }
+        public Document? Document { get; set; }
         [ForeignKey("Status")]
         public int StatusId { get; set; }
-        public Status Status { get; set; }
+        public Status? Status { get; set; }
 
 
     }

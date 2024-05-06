@@ -46,3 +46,22 @@ body {
     width:15%;
     height:40px;
 }
+
+.model-item {
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+}
+
+#yourImg{
+    height:35%;   
+}
+
+.control-btn{
+    display:flex;
+    justify-content:flex-end;
+
+}
+
+.control-btn a{
+    margin-left:10px;
+}

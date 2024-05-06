@@ -3,8 +3,8 @@
 *@
 @{
 }
-@using stockTable.ViewModel.EquipmentViewModel;
-@model DetailEquipmentViewModel
+@using stockTable.ViewModel.LowEquipmentViewModel;
+@model DetailLowEqViewModel
 
 <div class="model-item">
     <div class="model-info">
@@ -13,19 +13,16 @@
         <hr>
         <h3>Тип оборудования: @Model.Equipment.TypeEq</h3>
         <h3>Модель оборудования: @Model.Equipment.Model</h3>
-        <h3>Имя ПК: @Model.Equipment.NamePC</h3>
-        <h3>Операционая система: @Model.Equipment.OCName</h3>
         <h3>IP адрес: @Model.Equipment.IPAddress</h3>
         <h3>Статус обородувание: @Model.Equipment.Status.Name</h3>
         <h3>Цена: @Model.Equipment.Price</h3>
+        <h3>Количество: @Model.Equipment.Count</h3>
         <h3>Серийный номер: @Model.Equipment.SerialNum</h3>
-        <h3>Дата поставки: @Model.Equipment.dataE</h3>
     </div>
     <div class="model-document">
         <hr>
         <h1>Документ</h1>
         <hr>
-        <h3>Инвентарный номер: @Model.Equipment.InventoryNum</h3>
         <h3>Номер кабинета: @Model.Equipment.Document.CabinetNum</h3>
         <h3>Номер контакта: @Model.Equipment.Document.NumContract</h3>
         <h3>Дата контракта: @Model.Equipment.Document.CabinetNum</h3>
@@ -37,8 +34,8 @@
 @if (User.IsInRole("admin") || User.IsInRole("editor"))
 {
     <div class="control-btn">
-        <a asp-controller="Equipment" asp-action="Edit" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-warning">Изменить</a>
-        <a asp-controller="Equipment" asp-action="Delete" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-danger">Удалить</a>
+        <a asp-controller="LowEquipment" asp-action="Edit" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-warning">Изменить</a>
+        <a asp-controller="LowEquipment" asp-action="Delete" asp-route-id="@Model.Equipment.Id" type="button" class="btn btn-danger">Удалить</a>
     </div>
 }
 

@@ -8,6 +8,7 @@ namespace stockTable.Interfaces
         bool Delete(LowEquipment equipment);
         bool Update(LowEquipment equipment);
         bool Save();
+        Task<IEnumerable<LowEquipment>> GetByStatusId(int statusId);
         Task<IEnumerable<LowEquipment>> GetAll();
         Task<LowEquipment?> GetById(int id);
         Task<LowEquipment?> GetByIdNoTrack(int id);

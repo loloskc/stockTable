@@ -28,7 +28,7 @@ namespace stockTable.Repository
         public async Task<IEnumerable<LowEquipment>> GetAll()
         {
             
-            var list = await _context.LowEquipments.ToListAsync();
+            var list = await _context.LowEquipments.Include(e=>e.Document).Include(e=>e.Status).ToListAsync();
             return list;
         }
 
@@ -40,6 +40,11 @@ namespace stockTable.Repository
         public Task<LowEquipment?> GetByIdNoTrack(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<LowEquipment>> GetByStatusId(int statusId)
+        {
+            return await _context.LowEquipments.Where(c => c.StatusId == statusId).Include(c => c.Document).ToListAsync();
         }
 
         public async Task<int> GetCount()
