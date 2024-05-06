@@ -130,7 +130,8 @@ namespace stockTable.Controllers
             {
                 var equipment = await _equipmentRepository.GetById(id);
                 var statuses = await _statusRepository.GetAll();
-                if (equipment == null) return View("Error");
+                if (equipment == null)
+                    return View("Error");
                 var vModel = new EditEqViewModel()
                 {
                     Equipment = equipment,
