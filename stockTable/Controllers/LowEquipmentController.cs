@@ -134,7 +134,7 @@ namespace stockTable.Controllers
                 else
                     return View("Error");
             }
-            return RedirectToAction("Index", "Equipment");
+            return RedirectToAction("Index", "LowEquipment");
         }
 
         [HttpGet]
