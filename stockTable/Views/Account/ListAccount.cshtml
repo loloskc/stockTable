@@ -17,7 +17,7 @@
     <tbody>
         @foreach(var user in Model)
         {
-            <tr>
+            <tr onclick="openDetailUser('@user.Id')">
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
@@ -26,3 +26,11 @@
         }
     </tbody>
 </table>
+
+
+
+<script type="text/javascript">
+    function openDetailUser(id) {
+        window.open('Detail/' + id, '_self');
+    }
+</script>

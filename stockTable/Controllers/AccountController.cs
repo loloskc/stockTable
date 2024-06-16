@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using stockTable.Constants;
 using stockTable.Data;
 using stockTable.Interfaces;
 using stockTable.Models;
 using stockTable.ViewModel;
+using System.Linq;
+using System.Security.Claims;
 
 namespace stockTable.Controllers
 {
@@ -78,6 +81,11 @@ namespace stockTable.Controllers
 
         public async Task<IActionResult> ListAccount()
         {
+            string currentUserId = User.FindFirst(ClaimsConstants.UserId).Value;
+            var user = await _userRepository.GetById(currentUserId);
+
+            await _userManager.AddToRoleAsync(user, "reader");
+
             if (User.IsInRole("admin"))
             {
                 var list = await _userRepository.GetAll();
@@ -142,18 +150,21 @@ namespace stockTable.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailUser(string id)
+        public async Task<IActionResult> Detail(string id)
         {
-            if (User.IsInRole("admin"))
+            string currentUserId = User.FindFirst(ClaimsConstants.UserId).Value;
+
+            if(currentUserId == id || User.IsInRole("admin"))
             {
                 DetailUserViewModel model = new DetailUserViewModel();
                 model.User = await _userRepository.GetById(id);
                 model.RoleName = await _userRepository.GetUserRoleById(id);
 
+                
                 return View(model);
             }
+
             return RedirectToAction("Index", "Home");
-           
         }
     }
 }
