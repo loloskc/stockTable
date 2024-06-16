@@ -3,6 +3,7 @@ using stockTable.Data;
 using stockTable.Interfaces;
 using stockTable.Migrations;
 using stockTable.Models;
+using System.Diagnostics;
 
 namespace stockTable.Repository
 {
@@ -22,15 +23,20 @@ namespace stockTable.Repository
 
         public async Task<User> GetById(string id)
         {
-            return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
+            var user = await _context.Users.SingleOrDefaultAsync(i => i.Id == id);
+            return user;
         }
 
-        public async Task<string> GetUserRoleById(string userId)
+        public async Task<IEnumerable<string>> GetUserRoleById(string userId)
         {
-            var UserRole = await _context.UserRoles.FirstOrDefaultAsync(i => i.UserId == userId);
-            var roleId = UserRole.RoleId;
-            var role = await _context.Roles.FirstOrDefaultAsync(i => i.Id == roleId);
-            return role.Name;
+            var UserRole = await _context.UserRoles.Where(i => i.UserId == userId).ToListAsync();
+            var list = new List<string>();
+            foreach (var thisRole in UserRole)
+            {
+                var role = await _context.Roles.FirstOrDefaultAsync(i => i.Id == thisRole.RoleId);
+                list.Add(role.Name);
+            }
+            return list;
         }
 
         public async Task<IEnumerable<User>> GetUsersByRole(string roleName)

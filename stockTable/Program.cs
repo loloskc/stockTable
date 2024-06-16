@@ -13,10 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-var currentPath = Directory.GetCurrentDirectory();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Logging.AddFile(Path.Combine(currentPath, new ServiceFolder().GetFolder(currentPath,"Logs")));
 builder.Services.AddScoped<IDocumentRepository,DocumentRepository>();
 builder.Services.AddScoped<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddScoped<IStatusRepository,StatusRepository>();

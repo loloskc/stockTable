@@ -129,12 +129,12 @@ namespace stockTable.Controllers
 
                     _lowEquipmentRepository.Delete(equipment);
                     _documentRepository.Delete(document!);
-                    return RedirectToAction("Index", "Equipment");
+                    return RedirectToAction("Index", "LowEquipment");
                 }
                 else
                     return View("Error");
             }
-            return RedirectToAction("Index", "Equipment");
+            return RedirectToAction("Index", "LowEquipment");
         }
 
         [HttpGet]

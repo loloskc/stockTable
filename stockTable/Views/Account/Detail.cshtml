@@ -3,3 +3,27 @@
 *@
 @{
 }
+
+@using stockTable.ViewModel
+@model DetailUserViewModel
+
+<div class="model-item">
+    <div class="model-info">
+        <hr>
+        <h1>Информация об пользователи</h1>
+        <hr>
+        <h3>Никнейм: @Model.User.UserName</h3>
+        <h3>Роли:</h3>
+        @foreach(var role in Model.RoleName)
+        {
+            <h3>@role</h3>
+        }
+    </div>
+    <div class="model-info">
+        <hr>
+        <h1>Контактная информация</h1>
+        <hr>
+        <h3>Номер телефона: @Model.User.PhoneNumber</h3>
+        <h3>Почта: @Model.User.Email</h3>
+    </div>
+</div>
